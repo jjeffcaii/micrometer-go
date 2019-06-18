@@ -8,7 +8,7 @@ import (
 )
 
 func TestBuilder(t *testing.T) {
-	var reg MeterRegistry
+	reg := NewSimpleMeterRegistry()
 	c, err := Builder().
 		Counter("rsocket.request").
 		Tags("service", "ping.PingPong", "method", "ping").

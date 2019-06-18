@@ -25,7 +25,7 @@ type simpleMeterRegistry struct {
 func (p *simpleMeterRegistry) Counter(id *ID) (Counter, error) {
 	p.locker.Lock()
 	_, ok := p.m[id.Name]
-	if !ok {
+	if ok {
 		p.locker.Unlock()
 		return nil, fmt.Errorf("duplicated meter name %s", id.Name)
 	}
