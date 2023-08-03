@@ -1,7 +1,7 @@
 package micrometer
 
 import (
-	ga "github.com/linxGnu/go-adder"
+	"go.uber.org/atomic"
 )
 
 type (
@@ -13,7 +13,7 @@ type (
 
 	counter struct {
 		id *ID
-		v  ga.Float64Adder
+		v  *atomic.Float64
 	}
 )
 
@@ -37,12 +37,12 @@ func (p *counter) Increment(amount float64) {
 }
 
 func (p *counter) Count() float64 {
-	return p.v.Sum()
+	return p.v.Load()
 }
 
 func NewCounter(id *ID) Counter {
 	return &counter{
 		id: id,
-		v:  ga.NewJDKF64Adder(),
+		v:  atomic.NewFloat64(0),
 	}
 }
